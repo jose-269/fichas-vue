@@ -1,0 +1,258 @@
+<Meta title="Example/Introduccion" />
+
+# Fichas Vue   
+### Project setup
+```
+npm install
+```
+### Compiles and hot-reloads for development
+```
+npm run dev
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### Version Bootstrap
+v5.1 
+```
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+```
+### version jQuery 
+
+version ^3.6.0
+
+### nigthcatsama   
+
+Libreria de Vue para implementar input range.   
+version v3.2.10
+
+## General
+
+La aplicación está desarrollada con Vue Cli 2.0, el repositorio de Bitbucket es: [link](https://jose-269@bitbucket.org/destacados/fichas-vue.git)  
+
+Para incializar el proyecto se debe instalar los modulos de node a través de la consola con el comando:
+
+```
+npm install
+```
+
+## Estructura de carpetas del proyecto fichas
+
+```
+node_modulos
+│
+│
+│
+public
+│
+│   favicon.ico
+│   index.html 
+│___
+│
+src
+│   App.vue
+│   main.js
+│   .browserslistrc
+│   .eslintrc.js
+│   .gitignore
+│   babel.config.js
+│   package-lock.json
+│   package.json
+│
+└───assets
+    │   1920x400.png
+    │   logo-sitio.png
+    │
+    └───img
+    │   │   1920x400.png
+    │   │   logo-sitio.png
+    │   │___
+    │   │
+    │   │___logo.png
+    │
+    │___components
+    │   │
+    │   │   Buscador.vue
+    │   │   Cards.vue
+    │   │   Footer.vue
+    │   │   Mapa.vue
+    │   │   Nav.vue
+    │   │   NuestroStock.vue
+    │   │   Paginacion.vue
+    |   |   RandomCards.vue
+    │   │   MainSlider.vue        
+    │   │
+    |   |__ficha-detalle
+    |   |  | 
+    |   |  |  Slider.vue
+    |   |  |
+    |   |  |___   
+    |   | 
+    |   |
+    │   │___filtros
+    |       |
+    │       │   FiltroLateral.vue   
+    │       │   FiltroSobre.vue
+    |       |   FiltroResultadoDePagina.vue
+    │       │ 
+    │       │___filtros_laterales
+    │       │   │
+    │       │   │   Anios.vue
+    │       │   │   Categorias.vue
+    │       │   │   Combustible.vue
+    │       │   │   Marca.vue
+    │       │   │   Precio.vue
+    │       │   │   Transmision.vue
+    │       │   │___
+    │       │
+    │       │___filtros_resultado_pagina
+    │       |   │
+    │       |   │   AutosPorPagina.vue
+    │       |   │   FiltroResultados.vue
+    │       |   │   PrecioMayorMenor.vue
+    │       |   │___
+    │       |
+    |       |___filtro-contacto
+    |       |   |
+    |       |   |   ContactoNombresJuntos.vue 
+    |       |   |   ContactoNombresSeparados.vue
+    |       |   |___
+    |       | 
+    |       |___filtro-nombres-page
+    |       |   |
+    |       |   |   PageNombresJuntos.vue   
+    |       |   |   PageNombresSeparados.vue
+    |       |   |___
+    |       |
+    |       |___filtro-solicitud-financiamiento
+    |           |
+    |           |   FinanciamientoNombresJuntos.vue           
+    |           |   FinanciamientoNombresSeparados.vue
+    |           |___
+    |
+    │___router
+    │   │
+    │   │   index.js
+    │   │___
+    │
+    │___scss
+    │   │
+    │   │   main.scss
+    │   │
+    │   │___abstract
+    │   │   │
+    │   │   │   _function.scss
+    │   │   │   _mixins.scss
+    │   │   │   _placeholders.scss
+    │   │   │   _variables.scss
+    │   │   │___
+    │   │
+    │   │___base
+    │   │   │
+    │   │   │   _reset.scss
+    │   │   │   _typography.scss
+    │   │   │
+    │   │   │___
+    │   │
+    │   │
+    │   │___components
+    │   │   │
+    │   │   │   _buttons.scss
+    │   │   │   _carousel.scss
+    │   │   │   _cover.scss
+    │   │   │   _dropdown.scss
+    │   │   │
+    │   │   │___
+    │   │
+    │   │
+    │   │___layout
+    │   │   │
+    │   │   │   _footer.scss
+    │   │   │   _forms.scss
+    │   │   │   _grid.scss
+    │   │   │   _header.scss
+    │   │   │   _main.scss
+    │   │   │   _navigarion.scss
+    │   │   │   _sidebar.scss
+    │   │   │
+    │   │   │___
+    │   │
+    │   │
+    │   │___pages
+    │   │   │
+    │   │   │   _contact.scss
+    │   │   │   _home.scss
+    │   │   │
+    │   │   │___
+    │   │
+    │   │
+    │   │___themes
+    │   │   │
+    │   │   │   _admin.scss
+    │   │   │   _theme.scss
+    │   │   │
+    │   │   │____
+    │   │
+    │   │
+    │   │___vendors
+    │   │
+    │   │   _bootdtrap.scss
+    │   │   _jquery-ui.scss
+    │   │
+    │   │___
+    │
+    │
+    │___store
+    │   │
+    │   │   index.js
+    │   │
+    │   │___
+    │
+    │  
+    │___views
+        │
+        |   Comparador.vue
+        |   Compramos-tu-auto.vue
+        |   Contacto.vue
+        |   Cotizacion-cliente.vue
+        │   Financiamiento.vue  
+        │   Formulario-contacto.vue
+        │   Home.vue
+        |   Mailto.vue
+        |   Page.vue
+        │   Seminuevos.vue
+        │
+        |___
+
+```
+
+# Detalles de estructura del proyecto
+
+En la carpetas node_modules estan los nodos de modules.
+
+## Public
+
+En la carpeta public está el index.html que es donde van los CDN de Bootstrap y Fontawesome, también van
+las fuentes de Google Fonts por ejemplo.
+
+## src
+
+Acá están las carpetas que principalmente vamos a usar. Esta el App.vue que es el archivo principal de
+nuestra aplicación, en el main.js esta todo lo que vamos a usar en vue como por ejemplo vuex o router.
+
+## assets
+
+Acá esta la carpeta img que es donde estan nuestras imagenes estáticas.
+
+
