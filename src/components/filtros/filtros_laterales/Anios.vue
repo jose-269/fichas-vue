@@ -8,8 +8,8 @@
         <div class="container pb-2 shadow p-3 bg-body rounded-bottom">
           <div class="py-4 px-3">
             <vue-slider v-model="getYear" 
-            :min="minAnio" 
-            :max="maxAnio" 
+            :min="anios[0]" 
+            :max="anios[1]" 
             :lazy=true
             :interval="1" 
             :process-style="{ backgroundColor: '#DC3545' }"
@@ -55,7 +55,8 @@ export default {
         return this.minMaxYear;
       },
       set(v) {
-        this.getMinYear(v)
+        console.log(this.minMaxYear);
+        return this.getMinYear(v[0])
       }
     },
     ObserverMinYear: {
@@ -66,22 +67,6 @@ export default {
       //    this.getMinMaxYear(this.minMaxYear[0]);
       // }
     },
-    // min() {
-    //   return this.minMaxYear[0]
-    // },
-    // max() {
-    //   return this.minMaxYear[1]
-    // },
-    // observerYear: {
-    //   get() {
-    //     return this.getMinMaxYear
-    //   },
-    //   set(v){
-    //     console.log(v);
-    //     return v
-    //   }
-    // },
-    // ...mapGetters(["getMinMaxYear"]),
   ...mapState(["minMaxYear"])
   },
   methods: {

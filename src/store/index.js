@@ -163,6 +163,7 @@ export default new Vuex.Store({
     getMinYear(state, payload){
       state;
       console.log(payload);
+      // console.log(payload);
     },
   },
   actions: {},
