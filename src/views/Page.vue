@@ -13,12 +13,18 @@
             </button>
           </router-link>
         </div>
-
         <h4>Audi Q3</h4>
-        <h5>
-          <i class="fas fa-star text-warning"></i>Precio
-          <span class="text-danger fw-bold">$20.990.000</span>
-        </h5>
+        <div class="precios">
+          <h5>
+            <i class="fas fa-star text-warning"></i>Precio: 
+            <span class="text-danger fw-bold">$20.990.000</span>
+          </h5>
+          <h5 class="ms-4">Precio con financiamiento: <span class="text-danger fw-bold">$19.990.000</span></h5>
+        </div>
+        <hr />
+        <div class="text-center">
+          <img src="../assets/img/banner-2.png" class="img-fluid" alt="banner-1">
+        </div>
         <hr />
         <div class="row">
           <div class="col px-sm-4 px-md-0 px-lg-2">
@@ -56,7 +62,7 @@
           </div>
           <div class="col px-sm-4 px-md-0 px-lg-2">negro</div>
         </div>
-        <div class="cotiza border border-warning mt-5">
+        <div class="cotiza border border-warning mt-3">
           <div class="form-group py-4 px-3">
             <h4 class="text-center">
               <i class="fas fa-star text-warning me-1"></i>COTIZAR ESTE VEHÍCULO
@@ -150,7 +156,7 @@
       </div>
     </div>
     <div class="row mb-5">
-      <div class="col-12 col-md-8 mt-5">
+      <div class="col-12 col-md-8 mt-3">
         <div class="border p-4 shadow">
           <h5><i class="fas fa-star text-warning me-1"></i>Equipamiento</h5>
           <div class="pt-4 px-4">
@@ -186,10 +192,18 @@
           <h5><i class="fas fa-star text-warning me-1"></i>Descripción</h5>
         </div>
       </div>
-      <div class="col-12 col-md-4 mt-5">
+      <div class="col-12 col-md-4 mt-3">
         <div class="border p-4 shadow">
-          <h5><i class="fas fa-star text-warning me-1"></i>Ubicación</h5>
-          <a href="#" style="text-decoration: none">+56-51-2296917</a>
+          <div class="d-flex justify-content-between">
+            <div>
+              <h5><i class="fas fa-star text-warning me-1"></i>Ubicación</h5>
+              <a href="#" style="text-decoration: none">+56-51-2296917</a>
+            </div>
+            <div class="waze-button my-auto">
+              <a href="https://ul.waze.com/ul?ll=-33.45408800%2C-70.60303410&navigate=yes&utm_campaign=waze_website&utm_source=waze_website&utm_medium=lm_share_location" target="_blank">
+              <i class="fab fa-waze fa-2x p-1"></i></a>
+            </div>
+          </div>
           <div class="mapa pt-4">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d426000.965030887!2d-70.91001965610009!3d-33.47189991731077!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c5410425af2f%3A0x8475d53c400f0931!2sSantiago%2C%20Regi%C3%B3n%20Metropolitana!5e0!3m2!1ses!2scl!4v1588798327102!5m2!1ses!2scl"
@@ -204,6 +218,11 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="row">
+      <div class=" text-center">
+          <img src="../assets/img/banner-bajo-el-precio.png" class="img-fluid" alt="banner-1">
+        </div>
     </div>
     <div class="row mb-5">
       <div class="col-12">
@@ -294,17 +313,18 @@ export default {
     color: #000;
     font-size: 0.6875rem;
     text-align: justify;
-    // float: left;
-    // margin-top: 0.625rem
   }
-
-// .carousel-indicators button {
-//   width: 120px;
-// };
 .label-credito {
   font-size: 13px;
 }
-
-//  carousel
+.waze-button {
+  background-color: #fff;
+  height: fit-content;
+  border: 4px solid #42D5FF;
+  border-radius: 13px 13px;
+  a {
+    color: #395359;
+  }
+}
 
 </style>

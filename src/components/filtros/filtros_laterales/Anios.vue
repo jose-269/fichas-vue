@@ -7,10 +7,10 @@
         </p>
         <div class="container pb-2 shadow p-3 bg-body rounded-bottom">
           <div class="py-4 px-3">
-            <vue-slider v-model="getYear" 
-            :min="anios[0]" 
-            :max="anios[1]" 
-            :lazy=true
+            <vue-slider v-model="observerAnios" 
+            :min="minAnio" 
+            :max="maxAnio" 
+            :lazy="true"
             :interval="1" 
             :process-style="{ backgroundColor: '#DC3545' }"
             :marks="AniosMarks" 
@@ -28,17 +28,16 @@
 </template>
 
 <script>
-import VueSlider from "vue-slider-component";
-import "vue-slider-component/theme/default.css";
+import VueSlider from "vue-slider-component"
+import "vue-slider-component/theme/default.css"
 import { mapState, mapMutations } from "vuex";
 // import $ from "jquery";
 export default {
   name: "Anios",
   data() {
     return {
-      anios: [2010, 2021],
-      // min: this.minAnio(),
-      AniosMarks: [],
+      // anios: [2010, 2021],
+      AniosMarks: [2010, 2021],
     };
   },
   computed: {
@@ -50,39 +49,30 @@ export default {
       const max = Math.max.apply(Math, this.minMaxYear);
       return max;
     },
-    getYear:{
-      get(){
+    observerAnios: {
+      get() {
         return this.minMaxYear;
       },
       set(v) {
-        console.log(this.minMaxYear);
-        return this.getMinYear(v[0])
+         return this.setMinYear(v[0]);
       }
     },
-    ObserverMinYear: {
-      get() {
-        return this.minMaxYear[0];
-      },
-      // set() {
-      //    this.getMinMaxYear(this.minMaxYear[0]);
-      // }
-    },
-  ...mapState(["minMaxYear"])
+  ...mapState(["minAnios", "minMaxYear"]),
   },
   methods: {
-    ...mapMutations(["getMinMaxYear", "getMinYear"])
-  },
-  created () {
-    this.getMinMaxYear();
-    this.getMinYear()
+    ...mapMutations(["getMinMaxYear", "setMinYear"]),
   },
   components: {
     VueSlider,
   },
   props: {
-    year: {
+    years: {
       type: Array,
     },
+  },
+  created () {
+    this.getMinMaxYear();
+    this.setMinYear();
   },
 };
 </script>

@@ -9,9 +9,9 @@
             </div>
 
 
-              <div class="text-center d-flex" v-for="(seleccion, i) in comparadorSeleccion" :key="i">
+              <div class="text-center d-flex" v-for="(seleccion, i) in seleccionados" :key="i">
                 <div class="d-flex">
-                  <img  :src="seleccion.pic" alt="imagen thimbnail" height="75px" class="rounded-circle">
+                  <img  :src="seleccion.pic" alt="imagen thumbnail" height="75px" class="rounded-circle">
                   <div class="my-auto">
                     <h5 class="mb-0 ps-2 text-uppercase">{{seleccion.marca}}</h5>
                   <button class="btn btn-disabled ms-2 mt-auto" @click="eliminaSelectComparador(seleccion.id)">Emilinar</button>
@@ -126,7 +126,7 @@ export default {
 .comparador {
   position: fixed;
   top: 0;
-  // height: 175px;
+  overflow: scroll;
   z-index: 6;
   background-color: #fff;
   width: 100vw;

@@ -14,14 +14,15 @@
         rounded-bottom
       "
     >
-      <div class="form-check" v-for="(item, i) in mark" :key="i">
+      <div class="form-check" v-for="(item, i) in brand" :key="i">
         <input
           class="form-check-input"
           type="checkbox"
-          value=""
-          id="flexCheckDefault"
+          :value="item"
+          :id="item"
+          v-model="observadorMarca"
         />
-        <label class="form-check-label" for="flexCheckDefault">
+        <label class="form-check-label text-capitalize" for="flexCheckDefault">
           {{ item }}
         </label>
       </div>
@@ -39,10 +40,25 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "Marca",
+  computed: {
+    observadorMarca: {
+       get() {
+        return this.marcas;
+      },
+      set(v) {
+        this.marcasObserver(v);
+      }
+    },
+  ...mapState(["marcas"])
+  },
+  methods: {
+    ...mapMutations(["marcasObserver"])
+  },
   props: {
-    mark: {
+    brand: {
       type: Array,
     },
   },

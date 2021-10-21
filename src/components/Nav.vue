@@ -22,22 +22,22 @@
               ><button class="btn btn-light px-3">COMPRAMOS TU AUTO</button></router-link
             >
           </li>
-          <li class="nav-item">
-            <router-link class="nav-link" aria-current="page" to="/"
+          <li class="nav-item my-auto">
+            <router-link class="nav-link " aria-current="page" to="/"
               >INICIO</router-link
             >
           </li>
-          <li class="nav-item">
+          <li class="nav-item my-auto">
             <router-link class="nav-link" to="/seminuevos"
               >SEMINUEVOS</router-link
             >
           </li>
-          <li class="nav-item">
+          <li class="nav-item my-auto">
             <router-link class="nav-link" to="/financiamiento"
               >FINANCIAMIENTO</router-link
             >
           </li>
-          <li class="nav-item">
+          <li class="nav-item my-auto">
             <router-link class="nav-link" to="/contacto">CONTACTO</router-link>
           </li>
         </ul>

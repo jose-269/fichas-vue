@@ -1,31 +1,20 @@
 <template>
   <div class="container mb-5 py-3">
-    <!-- Resultados -->
-    <div class="row" v-if="categorias.length === 0 && transmisiones.length === 0 && combustibles.length === 0">
-      <!-- cards -->
-      <div class="col-md-6 col-lg-4 pb-3" v-for="(auto, i) in data" :key="i">
-        <div class="card d-flex my-2" style="height: 100%">
+    <div class="row">
+      <div
+        class="col-md-6 col-lg-4 pb-3"
+        v-for="(auto, i) in getFiltrosLateral"
+        :key="i"
+      >
+        <div class="card my-2" style="height: 100%">
           <router-link to="/page">
-            <img :src="auto.pic" class="card-img-top" alt="vehículo imagen"  />
+            <img :src="auto.pic" class="card-img-top" alt="vehículo imagen" />
           </router-link>
-          <div
-            class="
-              form-check form-check-inline
-              comparar-check
-              p-0
-              rounded
-              bg-light
-            "
-          >
-            <input
-              class="form-check-input ms-1"
-              type="checkbox"
-              :value="auto"
-              v-model="seleccionador"
-            />
+          <div class="form-check form-check-inline comparar-check p-0 rounded bg-light">
+            <input class="form-check-input ms-1" type="checkbox" :value="auto" v-model="seleccionador"/>
             <label class="form-check-label ps-1"> Comparar </label>
           </div>
-          <div class="card-body flex-column">
+          <div class="card-body d-flex flex-column">
             <h5 class="card-title text-center text-uppercase">
               {{ auto.marca }}
             </h5>
@@ -34,7 +23,7 @@
               {{ auto.formatPrecio }}
             </h5>
             <hr />
-            <div class="row text-center pb-5 d-flex">
+            <div class="row text-center pb-3">
               <div class="col-6 pt-2">
                 <i class="far fa-calendar-alt pe-2"></i>{{ auto.anio }}
               </div>
@@ -48,8 +37,8 @@
                 <i class="fas fa-road"></i>{{ auto.kms }} Kms
               </div>
             </div>
-            <div class="d-flex justify-content-between align-items-center">
-              <a class="btn btn-dark"  >VER MÁS</a>
+            <div class="d-flex justify-content-between align-items-end mt-auto" >
+              <a class="btn btn-dark">VER MÁS</a>
               <div  class="text-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Añadir a favoritos">
                 <i class="fas fa-star fa-2x " data-bs-toggle="modal" data-bs-target="#modalFavoritos" style="cursor:pointer;"></i>
               </div>
@@ -85,65 +74,6 @@
                 </div>
               </div>
             </div>
-            <!-- FIN MODAL -->
-          </div>
-        </div>
-      </div>
-      <!-- cards -->
-    </div>
-    <div class="row" v-else>
-      <div
-        class="col-md-6 col-lg-4 pb-3"
-        v-for="(auto, i) in getFiltrosLateral"
-        :key="i"
-      >
-        <div class="card my-2" style="height: 100%">
-          <router-link to="/page">
-            <img :src="auto.pic" class="card-img-top" alt="vehículo imagen" />
-          </router-link>
-          <div
-            class="
-              form-check form-check-inline
-              comparar-check
-              p-0
-              rounded
-              bg-light
-            "
-          >
-            <input
-              class="form-check-input ms-1"
-              type="checkbox"
-              :value="auto"
-              v-model="seleccionador"
-            />
-            <label class="form-check-label ps-1"> Comparar </label>
-          </div>
-          <div class="card-body">
-            <h5 class="card-title text-center text-uppercase">
-              {{ auto.marca }}
-            </h5>
-            <hr />
-            <h5 class="card-title text-center text-uppercase text-danger">
-              {{ auto.formatPrecio }}
-            </h5>
-            <hr />
-            <div class="row text-center pb-3">
-              <div class="col-6 pt-2">
-                <i class="far fa-calendar-alt pe-2"></i>{{ auto.anio }}
-              </div>
-              <div class="col-6 pt-2">
-                <i class="fas fa-code-branch"></i> {{ auto.transmision }}
-              </div>
-              <div class="col-6 pt-2">
-                <i class="fas fa-gas-pump"></i> {{ auto.combustible }}
-              </div>
-              <div class="col-6 pt-2">
-                <i class="fas fa-road"></i>{{ auto.kms }} Kms
-              </div>
-            </div>
-            <div class="d-grid gap-2 d-md-block">
-              <a class="btn btn-dark">VER MÁS</a>
-            </div>
           </div>
         </div>
       </div>
@@ -168,6 +98,7 @@ export default {
     ...mapState([
       "data",
       "categorias",
+      "marcas",
       "transmisiones",
       "filtrados",
       "combustibles",

@@ -18,39 +18,60 @@ export default new Vuex.Store({
     contactoNombres: true,
     // CAMBIO DE FILTRO PAGE
     pageNombres: true,
-    // CAMBIO DE FILTRO LATERAL
+    // TOGGLE DE FILTRO LATERAL
     categoriasToggle: true,
     marcaToggle: true,
     aniosToggle: true,
     precioToggle: true,
     transmisionToggle: true,
     combustibleToggle: true,
-    // FIN CAMBIO DE FILTRO LATERAL
+    // FIN TOGGLE DE FILTRO LATERAL
+    // TOGGLE BOTONES COMPARADOR
+    comparadorComparteAmigo: true,
+    cotizarMasdeUno: true,
+    cotizaUno: true,
+    // FIN TOGGLE BOTONES COMPARADOR
     // ESTADO FILTRO DE CATEGORIA
+    buscador: "",
     categorias: [],
     transmisiones: [],
     combustibles: [],
+    marcas: [],
     categoriasTotal: [],
     categoriasFiltradas: [],
     filtrados: [],
     // SELECCIONADOS SEMINUEVOS COMPARADOR
     seleccionados: [],
+    // RANGO DE AÑOS
     minMaxYear: [],
+    minAnios: []
 
   },
   getters: {
     getFiltrosLateral(state) {
-      if(state.categorias.length && state.transmisiones.length && state.combustibles.length) return state.data.filter(obj => state.categorias.includes(obj.categoria) && state.transmisiones.includes(obj.transmision) && state.combustibles.includes(obj.combustible));
+      // BUSCADOR POR PALABRA
+      if(state.buscador) return state.data.filter(word => word.marca.match(state.buscador.toLocaleLowerCase()) || word.anio.match(state.buscador) || word.transmision.match(state.buscador.toLocaleLowerCase()));
+      // FIN BUSCADOR
+      // CHECKBOXES
+      if(state.categorias.length && state.marcas.length && state.transmisiones.length && state.combustibles.length) return state.data.filter(obj => state.categorias.includes(obj.categoria) && state.marcas.includes(obj.marca) && state.transmisiones.includes(obj.transmision) && state.combustibles.includes(obj.combustible));
+      
+      else if(state.categorias.length && state.marcas.length && state.transmisiones.length) return state.data.filter(obj => state.categorias.includes(obj.categoria) && state.marcas.includes(obj.marca) && state.transmisiones.includes(obj.transmision));
+      else if(state.categorias.length && state.marcas.length && state.combustibles.length) return state.data.filter(obj => state.categorias.includes(obj.categoria) && state.marcas.includes(obj.marca) && state.combustibles.includes(obj.combustible));
+
+      else if(state.categorias.length && state.marcas.length) return state.data.filter(obj => state.categorias.includes(obj.categoria) && state.marcas.includes(obj.marca));
       else if(state.categorias.length && state.transmisiones.length) return state.data.filter(obj => state.categorias.includes(obj.categoria) && state.transmisiones.includes(obj.transmision));
       else if(state.categorias.length && state.combustibles.length) return state.data.filter(obj => state.categorias.includes(obj.categoria) && state.combustibles.includes(obj.combustible));
-      else if(state.categorias.length) return state.data.filter(obj => state.categorias.includes(obj.categoria));
-      else if(state.transmisiones.length && state.categorias.length) return state.data.filter(obj => state.transmisiones.includes(obj.transmision) && state.categorias.includes(obj.categoria));
       else if(state.transmisiones.length && state.combustibles.length) return state.data.filter(obj => state.transmisiones.includes(obj.transmision) && state.combustibles.includes(obj.combustible));
+      else if(state.transmisiones.length && state.marcas.length) return state.data.filter(obj => state.transmisiones.includes(obj.transmision) && state.marcas.includes(obj.marca));
+      else if(state.combustibles.length && state.marcas.length) return state.data.filter(obj => state.combustibles.includes(obj.combustible) && state.marcas.includes(obj.marca));
+      
+      else if(state.categorias.length) return state.data.filter(obj => state.categorias.includes(obj.categoria));
+      else if(state.marcas.length) return state.data.filter(obj => state.marcas.includes(obj.marca));
       else if(state.transmisiones.length) return state.data.filter(obj => state.transmisiones.includes(obj.transmision));
-      else if(state.combustibles.length && state.categorias.length) return state.data.filter(obj => state.combustibles.includes(obj.combustible) && state.categorias.includes(obj.categoria));
-      else if(state.combustibles.length && state.transmisiones.length) return state.data.filter(obj => state.combustibles.includes(obj.combustible) && state.transmisiones.includes(obj.transmision))
       else if(state.combustibles.length) return state.data.filter(obj => state.combustibles.includes(obj.combustible));
+      
       else return state.data
+      // FIN CHECKBOXES
     },
       /***  CATEGORIAS  ***/
     itemsCategorias(state) {
@@ -67,9 +88,15 @@ export default new Vuex.Store({
       const combustibles = state.data.map(el => el.combustible).filter((combustible, i, arr) => arr.indexOf(combustible) === i);
       return combustibles;
     },
-    intemsAnios(state) {
+    /***  AÑOS  ***/
+    itemsAnios(state) {
       const anios = state.data.map(el => el.anio).filter((anio, i, arr) => arr.indexOf(anio) === i);
       return anios;
+    },
+    /***  MARCAS  ***/
+    itemsMarcas(state) {
+      const marcas = state.data.map(el => el.marca).filter((marca,i, arr) => arr.indexOf(marca) === i);
+      return marcas;
     },
     comparadorSeleccion(state) {
       if(state.seleccionados.length > 3) {
@@ -78,31 +105,12 @@ export default new Vuex.Store({
       };
       return state.seleccionados;
     },
-    // minMaxYear(state){
-    //   let minMax = [];
-    //   const anios = state.data.map(el => el.anio).filter((anio, i, arr) => arr.indexOf(anio) === i);
-
-    // },
-    getMinMaxYear(state){
-      let arr = []
-      const anios = state.data.map(el => el.anio).filter((anio, i, arr) => arr.indexOf(anio) === i);
-      const min = Math.min.apply(Math, anios);
-      arr.push(min)
-      const max = Math.max.apply(Math, anios);
-      arr.push(max)
-      return arr
-    }
   },
   mutations: {
     // FORMATEADOR DE PRECIOS CL Y USD
     formatPrices(state) {
       const filtradosCl = state.data.filter((el) => el.moneda === "$");
-      filtradosCl.forEach(
-        (el) =>
-          (el.formatPrecio = `$${el.precio.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            "."
-          )}`)
+      filtradosCl.forEach((el) => (el.formatPrecio = `$${el.precio.replace(/\B(?=(\d{3})+(?!\d))/g,".")}`)
       );
       const formatter = new Intl.NumberFormat("en-US", {
         currency: "USD",
@@ -111,6 +119,17 @@ export default new Vuex.Store({
       filtradosUsd.forEach(
         (el) => (el.formatPrecio = `USD ${formatter.format(el.precio)}`)
       );
+    },
+    formatKms(state) {
+      const filtradosKms = state.data.filter(el => el.kms);
+      filtradosKms.forEach(el => el.formatKms = el.kms.replace(/\B(?=(\d{3})+(?!\d))/g,"."));
+    },
+    // BUSCADOR POR PALABRAS
+    setBuscador(state, payload) {
+      const carga = payload;
+      if(!carga) return;
+      state.buscador = carga;
+      console.log(carga);
     },
     // OBSERVADOR DE CATEGORIAS
     categoriasObserver(state, payload) {
@@ -130,26 +149,28 @@ export default new Vuex.Store({
       if(!carga) return;
       state.combustibles = carga;
     },
+     //OBSERVADOR DE MARCAS
+     marcasObserver(state, payload) {
+      const carga = payload;
+      if(!carga) return;
+      state.marcas = carga;
+     },
     // OBSERVADOR DE COMPARADOR
     observadorSeleccionado(state, payload) {
       const carga = payload;
       if(!carga) return;
       state.seleccionados = carga;
     },
-    // BORRAR DEL COMPARADOR
     deleteByIdSeleccionados(state, payload) {
       const carga = payload;
       if(!carga) return;
-      state.seleccionados.splice(carga.indexOf(state.seleccionados))
+      const removeById = state.seleccionados.findIndex(el => el.id === carga);
+      state.seleccionados.splice(removeById, 1)
     },
     deleteTodosSeleccionados(state) {
       state.seleccionados = [];
     },
-    // showValue(state, payload) {
-    //   state.data;
-    //   const carga = payload;
-    //   console.log(carga);
-    // }
+    // RANGO DE AÑOS
     getMinMaxYear(state){
       let arr = []
       const anios = state.data.map(el => el.anio).filter((anio, i, arr) => arr.indexOf(anio) === i);
@@ -160,10 +181,13 @@ export default new Vuex.Store({
       state.minMaxYear = arr;
       return arr
     },
-    getMinYear(state, payload){
-      state;
-      console.log(payload);
-      // console.log(payload);
+    setMinYear(state, payload) {
+      const carga = payload;
+      if(!carga) return;
+      state.minAnios = carga;
+      const filter = state.data.filter(obj => carga <= obj.anio);
+      // const filter = state.data.slice(0, state.data.filter(obj => carga <= obj.anio));
+      console.log(filter);
     },
   },
   actions: {},
