@@ -37,6 +37,11 @@ export default new Vuex.Store({
     transmisiones: [],
     combustibles: [],
     marcas: [],
+
+    totalAnios: [],
+    minAnio: [],
+    maxAnio: [],
+
     categoriasTotal: [],
     categoriasFiltradas: [],
     filtrados: [],
@@ -44,7 +49,7 @@ export default new Vuex.Store({
     seleccionados: [],
     // RANGO DE AÑOS
     minMaxYear: [],
-    minAnios: []
+    todosAnios: [],
 
   },
   getters: {
@@ -53,7 +58,8 @@ export default new Vuex.Store({
       if(state.buscador) return state.data.filter(word => word.marca.match(state.buscador.toLocaleLowerCase()) || word.anio.match(state.buscador) || word.transmision.match(state.buscador.toLocaleLowerCase()));
       // FIN BUSCADOR
       // CHECKBOXES
-      if(state.categorias.length && state.marcas.length && state.transmisiones.length && state.combustibles.length) return state.data.filter(obj => state.categorias.includes(obj.categoria) && state.marcas.includes(obj.marca) && state.transmisiones.includes(obj.transmision) && state.combustibles.includes(obj.combustible));
+      if(state.categorias.length && state.marcas.length && state.transmisiones.length && state.combustibles.length) return state.data.filter(obj => state.categorias.includes(obj.categoria) && state.marcas.includes(obj.marca) && state.transmisiones.includes(obj.transmision) && state.combustibles.includes(obj.combustible) && state.minMaxYear[0] <= obj.anio && state.minMaxYear >= obj.anio);
+      // if(state.minMaxYear) return state.data.filter(obj => state.minMaxYear[0] <= obj.anio)
       
       else if(state.categorias.length && state.marcas.length && state.transmisiones.length) return state.data.filter(obj => state.categorias.includes(obj.categoria) && state.marcas.includes(obj.marca) && state.transmisiones.includes(obj.transmision));
       else if(state.categorias.length && state.marcas.length && state.combustibles.length) return state.data.filter(obj => state.categorias.includes(obj.categoria) && state.marcas.includes(obj.marca) && state.combustibles.includes(obj.combustible));
@@ -65,10 +71,12 @@ export default new Vuex.Store({
       else if(state.transmisiones.length && state.marcas.length) return state.data.filter(obj => state.transmisiones.includes(obj.transmision) && state.marcas.includes(obj.marca));
       else if(state.combustibles.length && state.marcas.length) return state.data.filter(obj => state.combustibles.includes(obj.combustible) && state.marcas.includes(obj.marca));
       
-      else if(state.categorias.length) return state.data.filter(obj => state.categorias.includes(obj.categoria));
+      else if(state.categorias.length) return state.data.filter(obj => state.categorias.includes(obj.categoria) && state.minMaxYear[0] <= obj.anio && state.minMaxYear[1] >= obj.anio);
       else if(state.marcas.length) return state.data.filter(obj => state.marcas.includes(obj.marca));
-      else if(state.transmisiones.length) return state.data.filter(obj => state.transmisiones.includes(obj.transmision));
-      else if(state.combustibles.length) return state.data.filter(obj => state.combustibles.includes(obj.combustible));
+      else if(state.transmisiones.length) return state.data.filter(obj => state.transmisiones.includes(obj.transmision) && state.minMaxYear[0] <= obj.anio && state.minMaxYear[1] >= obj.anio);
+      else if(state.combustibles.length) return state.data.filter(obj => state.combustibles.includes(obj.combustible) && state.minMaxYear[0] <= obj.anio && state.minMaxYear[1] >= obj.anio);
+
+      else if(!state.categorias.length && !state.marcas.length && !state.transmisiones.length && !state.combustibles.length) return state.data.filter(obj => state.minMaxYear[0] <= obj.anio && state.minMaxYear[1] >= obj.anio)
       
       else return state.data
       // FIN CHECKBOXES
@@ -178,16 +186,27 @@ export default new Vuex.Store({
       arr.push(min)
       const max = Math.max.apply(Math, anios);
       arr.push(max)
+      state.todosAnios = anios
       state.minMaxYear = arr;
       return arr
     },
-    setMinYear(state, payload) {
+    setYears(state, payload) {
+     let anios = state.minMaxYear;
       const carga = payload;
       if(!carga) return;
-      state.minAnios = carga;
-      const filter = state.data.filter(obj => carga <= obj.anio);
-      // const filter = state.data.slice(0, state.data.filter(obj => carga <= obj.anio));
-      console.log(filter);
+      anios = carga;
+      state.minMaxYear = carga;
+      // state.data = state.data.filter(obj => anios[0] <= obj.anio);
+      console.log(anios);
+
+
+      // if(!carga) return state.totalAnios[0] = 2010;
+      // console.log(carga);
+      // state.totalAnios = carga;
+      // state.minAnio = carga[0];
+      // state.maxAnio = carga[1];
+      // if(state.minAnio > 0 ) return state.data.filter(obj => state.minAnio <= obj.anio);
+      // else return state.data
     },
   },
   actions: {},

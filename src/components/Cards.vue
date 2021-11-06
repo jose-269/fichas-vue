@@ -7,7 +7,7 @@
         :key="i"
       >
         <div class="card my-2" style="height: 100%">
-          <router-link to="/page">
+          <router-link :to="`/autos/${auto.id}`">
             <img :src="auto.pic" class="card-img-top" alt="vehículo imagen" />
           </router-link>
           <div class="form-check form-check-inline comparar-check p-0 rounded bg-light">
@@ -34,7 +34,7 @@
                 <i class="fas fa-gas-pump"></i> {{ auto.combustible }}
               </div>
               <div class="col-6 pt-2">
-                <i class="fas fa-road"></i>{{ auto.kms }} Kms
+                <i class="fas fa-road"></i>{{ auto.formatKms }} Kms
               </div>
             </div>
             <div class="d-flex justify-content-between align-items-end mt-auto" >

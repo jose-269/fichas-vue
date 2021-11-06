@@ -29,10 +29,10 @@ const routes = [
       import(/* webpackChunkName: "contacto" */ "../views/Contacto.vue"),
   },
   {
-    path: "/page",
-    name: "Page",
+    path: "/autos/:id",
+    name: "Autos",
     component: () =>
-      import(/* webpackChunkName: "page" */ "../views/Page.vue"),
+      import(/* webpackChunkName: "page" */ "../views/Autos.vue"),
   },
   {
     path: "/compramos-tu-auto",

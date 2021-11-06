@@ -5,7 +5,7 @@
       <!-- cards -->
       <div class="col-md-4 pb-3" v-for="(auto, i) in data" :key="i">
         <div class="card my-2" style="height: 100%">
-          <router-link to="/page">
+          <router-link to="/auto">
             <img :src="auto.pic" class="card-img-top" alt="vehículo imagen" />
           </router-link>
           <div class="card-body">

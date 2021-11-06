@@ -8,8 +8,8 @@
         <div class="container pb-2 shadow p-3 bg-body rounded-bottom">
           <div class="py-4 px-3">
             <vue-slider v-model="observerAnios" 
-            :min="minAnio" 
-            :max="maxAnio" 
+            :min="Math.min.apply(Math, this.years)" 
+            :max="Math.max.apply(Math, this.years)" 
             :lazy="true"
             :interval="1" 
             :process-style="{ backgroundColor: '#DC3545' }"
@@ -30,37 +30,31 @@
 <script>
 import VueSlider from "vue-slider-component"
 import "vue-slider-component/theme/default.css"
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations, mapGetters } from "vuex";
 // import $ from "jquery";
 export default {
   name: "Anios",
   data() {
     return {
-      // anios: [2010, 2021],
+      anios: [Math.min.apply(Math, this.years), Math.max.apply(Math, this.years)],
       AniosMarks: [2010, 2021],
     };
   },
   computed: {
-    minAnio() {
-      const min = Math.min.apply(Math, this.minMaxYear);
-      return min;
-    },
-    maxAnio() {
-      const max = Math.max.apply(Math, this.minMaxYear);
-      return max;
-    },
     observerAnios: {
       get() {
         return this.minMaxYear;
       },
       set(v) {
-         return this.setMinYear(v[0]);
+         this.setYears(v);
       }
     },
+    
   ...mapState(["minAnios", "minMaxYear"]),
+  ...mapGetters(["pruebaGet"]),
   },
   methods: {
-    ...mapMutations(["getMinMaxYear", "setMinYear"]),
+    ...mapMutations(["getMinMaxYear", "setYears"]),
   },
   components: {
     VueSlider,
@@ -72,7 +66,7 @@ export default {
   },
   created () {
     this.getMinMaxYear();
-    this.setMinYear();
+    this.setYears();
   },
 };
 </script>

@@ -13,11 +13,11 @@
             </button>
           </router-link>
         </div>
-        <h4>Audi Q3</h4>
+        <h4 class="text-capitalize">{{item.marca}}</h4>
         <div class="precios">
           <h5>
             <i class="fas fa-star text-warning"></i>Precio: 
-            <span class="text-danger fw-bold">$20.990.000</span>
+            <span class="text-danger fw-bold">{{item.formatPrecio}}</span>
           </h5>
           <h5 class="ms-4">Precio con financiamiento: <span class="text-danger fw-bold">$19.990.000</span></h5>
         </div>
@@ -275,14 +275,18 @@ export default {
   methods: {
     setActive(index) {
       let active = index;
-
       if (index === this.pics.length) active;
       else if (index === -1) active = this.pics.length - 1;
       this.active = active;
     },
   },
   computed: {
-    ...mapState(["pageNombres"]),
+    item() {
+      const finder = this.data.find(el => el.id === this.$route.params.id);
+      if (!finder) return;
+      return finder;
+    },
+    ...mapState(["data", "pageNombres"]),
   },
   components: {
     PageJuntos,
