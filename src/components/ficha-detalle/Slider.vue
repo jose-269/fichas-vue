@@ -1,82 +1,36 @@
 <template>
   <div class="body">
-    <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <div
-          v-for="(img, index) in pics"
-          :key="index"
-          :class="{ 'carousel-item': true, active: index === active }"
-        >
-          <div
-            data-bs-toggle="modal"
-            :data-bs-target="'#myModal-' + index"
-          >
-            <img :src="img" class=" d-block w-100 auto" />
-          </div>
-          <!-- MODAL -->
-          <div class="modal modal-xl fade" :id="'myModal-' + index" rop="static" data-bs-keyboard="false" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered text-center">
-              <div class="modal-content">
-                <div class="text-center justify-content-center">
-                  <img :src="img" class=" modal-thumbnail " alt="" />
-                </div>
-              </div>
-            </div>
-          </div>
+    <div class="bg-dark">
+      <VueSlickCarousel :arrows="true" :fade="true" :autoplay="true" :speed="500" :slidesToShow="1" :asNavFor="$refs.indicators"  ref="main" :focusOnSelect="true">
+        <div v-for="img,i in pics" :key="i" >
+          <img :src="img" alt="main-pic" class="main-carousel">
         </div>
-      </div>
-      <!-- CONTROLADORES -->
-      <button
-        class="carousel-control-prev"
-        type="button"
-        data-bs-target="#myCarousel"
-        data-bs-slide="prev"
-      >
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button
-        class="carousel-control-next"
-        type="button"
-        data-bs-target="#myCarousel"
-        data-bs-slide="next"
-      >
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
-    <!-- INDICADORES -->
-    <div class="indicadores bg-dark" >
-      <ul class="list-inline carousel-indicators--thumbnails">
-        <li
-          v-for="(img, i) in pics"
-          :key="i"
-          :class="{ 'list-inline-item ': true, active: i === active }"
-          data-bs-target="#myCarousel"
-          :data-bs-slide-to="i"
-          aria-current="true"
-        >
-          <div class="thumbnail">
-            <img
-              :src="img"
-              class="d-block img-fluid thumbnails-cars pe-0"
-              alt="..."
-            />
+        <template #prevArrow="arrowOption">
+           <div class="custom-arrow-prev">
+            {{ arrowOption.currentSlide }}/{{ arrowOption.slideCount }}
           </div>
-        </li>
-      </ul>
+        </template>
+        <template #nextArrow="arrowOption">
+           <div class="custom-arrow-next">
+            {{ arrowOption.currentSlide }}/{{ arrowOption.slideCount }}
+          </div>
+        </template>
+      </VueSlickCarousel>
     </div>
-    <!-- Fin carousel -->
-    <div class="textDes">
-      “Precios, equipamiento e información sujetos a cambio sin previo aviso.
-      Las imágenes son ilustrativas y pueden no coincidir con los productos
-      exhibidos y ofrecidos en concesionarios. Contacte un vendedor para
-      verificar los datos publicados”
+    <div class="bg-dark pb-2">
+      <VueSlickCarousel :autoplay="true" :speed="500" :slidesToShow="6" :arrows="false" :asNavFor="$refs.main"  ref="indicators" :focusOnSelect="true">
+        <div v-for="img,i in pics" :key="i" >
+          <img :src="img" alt="indicator-pic" class="indicator-carousel d-inline">
+        </div>
+      </VueSlickCarousel>
     </div>
   </div>
 </template>
 
 <script>
+import VueSlickCarousel from 'vue-slick-carousel';
+import 'vue-slick-carousel/dist/vue-slick-carousel.css';
+import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
 export default {
   name: "Slider",
 
@@ -93,95 +47,171 @@ export default {
         "https://cdn.shopify.com/s/files/1/1021/2921/articles/nissan-z-proto-front.jpg?v=1629268796",
         "https://dynaimage.cdn.cnn.com/cnn/c_fill,g_auto,w_1200,h_675,ar_16:9/https%3A%2F%2Fcdn.cnn.com%2Fcnnnext%2Fdam%2Fassets%2F210908165711-02-bentley-bacalar-drive.jpg",
       ],
-      
-      active: 0,
-      // bgClass: true,
-      'border border-light border-5':false,
+      // settingsMain: {
+      //   "dots": false,
+      //   "arrows": true,
+      //   // "dotsClass": "slick-dots custom-dot-class",
+      //   "edgeFriction": 0.35,
+      //   "infinite": true,
+      //   "speed": 500,
+      //   // "slidesToShow": 1,
+      //   "slidesToScroll": 1,
+      //   "autoplay": true,
+      //   "focusOnSelect": true,
+      //   "asNavFor": "$refs.indicator-carousel"
+      // },
+      settingsIndicators: {
+        "dots": false,
+        "arrows": true,
+        "edgeFriction": 0.35,
+        "infinite": true,
+        "speed": 500,
+        // "slidesToShow": 9,
+        "slidesToScroll": 1,
+        "autoplay": true,
+        // "focusOnSelect": true,
+        "asNavFor": "refs.main"
+      }
+      // active: 0,
+      // // bgClass: true,
+      // 'border border-light border-5':false,
     };
   },
-  computed: {
-    getPics() {
-      return this.active;
-    },
-  },
+  // computed: {
+  //   getPics() {
+  //     return this.active;
+  //   },
+  // },
   methods: {
-    setActive(index) {
-      let active = index;
+    // setActive(index) {
+    //   let active = index;
 
-      if (index === this.pics.length) active;
-      else if (index === -1) active = this.pics.length - 1;
-      this.active = active;
-    },
+    //   if (index === this.pics.length) active;
+    //   else if (index === -1) active = this.pics.length - 1;
+    //   this.active = active;
+    // },
+  },
+  components: {
+    VueSlickCarousel,
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.textDes {
-  padding: 1% 2%;
-  color: #000;
-  font-size: 0.6875rem;
-  text-align: justify;
-  // float: left;
-  // margin-top: 0.625rem
+.main-carousel {
+  // width: 730px;
+  height: 548px;
+  width: 100%;
+   object-fit: cover
 }
-.auto {
-  width: 45.625rem;
-  height: 34.25rem;
+.indicator-carousel {
+  width: 121.666667px;
+  height: 91.3333333px;
+   object-fit: cover;
 }
-.thumbnails-cars {
-  width: 100px;
-  height: 80px;
+.custom-arrow-prev {
+  z-index: 200;
 }
-.indicadores {
-  // background-color: #212529;
-  height: 110px;
-  cursor: pointer;
-  overflow-x: scroll;
-  overflow-y: hidden;
-  white-space: nowrap;
+.custom-arrow-next {
+  z-index: 200;
+  right: -165px;
+}
+
+.slick-prev::before {
+  color: black !important;
+  font-size: 50px;
+  line-height: 1;
+  position: absolute;
+  display: inline-block;
+  left: 40px;
+  opacity: 0.45;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.slick-next::before {
+  color: black !important;
+  font-size: 50px;
+  line-height: 1;
+  position: absolute;
+  display: inline-block;
+  right: 180px;
+  opacity: 0.45;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// .slick-prev:before,
+//             .slick-next:before {
+//                 font-size: 200px;
+//                 line-height: 1;
+
+//                 opacity: 0.75;
+//                 color: red !important;
+
+//                 -webkit-font-smoothing: antialiased;
+//                 -moz-osx-font-smoothing: grayscale;
+//             }
+        
+// .wrapper-img {
+//   width: fit-content;
+// }
+// .wrapper-indicators {
+//   width: fit-content;
+// }
+// .textDes {
+//   padding: 1% 2%;
+//   color: #000;
+//   font-size: 0.6875rem;
+//   text-align: justify;
+//   // float: left;
+//   // margin-top: 0.625rem
+// }
+// .auto {
+//   width: 730px;
+//   height: 548px;
+// }
+// .thumbnails-cars {
+//   width: 100px;
+//   height: 80px;
+// }
+// .indicadores {
+//   // background-color: #212529;
+//   height: 110px;
+//   cursor: pointer;
+//   overflow-x: scroll;
+//   overflow-y: hidden;
+//   white-space: nowrap;
   
-}
-
-::-webkit-scrollbar {
-  // width: 1px;
-  height: 14px;
-  background-color: #000;
-}
-
-::-webkit-scrollbar-thumb{
-	border-radius: 10px;
-	// -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-	background-color: #555;
-}
-.carousel-indicators--thumbnails li {
-  // width: 120px;
-  // height: 40px;
-  // margin: 0;
-  margin: 8px 4px;
-  // border: none;
-  // border-radius: 0;
-  opacity: 1;
-}
-.carousel-item {
-  cursor: pointer;
-}
-.modal-thumbnail {
-  width: 180%;
-  margin-right: 500px;
-  position: relative;
-  right: 0;
-  left: 0;
-}
-
-// .active {
-//   background-color: #fff;
-//   color: #fff;
 // }
-// .carousel-indicators.carousel-indicators--thumbnails .active {
-//   background-color: transparent;
+
+// ::-webkit-scrollbar {
+//   // width: 1px;
+//   height: 14px;
+//   background-color: #000;
 // }
-// .carousel-indicators.carousel-indicators--thumbnails .active .thumbnail {
-//   border-color: #337ab7;
+
+// ::-webkit-scrollbar-thumb{
+// 	border-radius: 10px;
+// 	// -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+// 	background-color: #555;
+// }
+// .carousel-indicators--thumbnails li {
+//   // width: 120px;
+//   // height: 40px;
+//   // margin: 0;
+//   margin: 8px 4px;
+//   // border: none;
+//   // border-radius: 0;
+//   opacity: 1;
+// }
+// .carousel-item {
+//   cursor: pointer;
+// }
+// .modal-thumbnail {
+//   width: 180%;
+//   margin-right: 500px;
+//   position: relative;
+//   right: 0;
+//   left: 0;
 // }
 </style>
