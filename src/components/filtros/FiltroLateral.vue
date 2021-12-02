@@ -6,7 +6,7 @@
           <Categorias :categories="itemsCategorias" v-if="categoriasToggle" />
           <Marca :brand="itemsMarcas" v-if="marcaToggle" />
           <Anios :years="itemsAnios" v-if="aniosToggle"/>
-          <Precio v-if="precioToggle" />
+          <Precio :prices="itemsPrecios" v-if="precioToggle" />
           <Transmision :transmission="itemsTransmision" v-if="transmisionToggle" />
           <Combustible :fuel="itemsCombustible" v-if="combustibleToggle"/>
         </div>
@@ -31,7 +31,7 @@ export default {
   },
   computed: {
     ...mapState(["categoriasToggle", "marcaToggle", "aniosToggle", "precioToggle", "transmisionToggle", "combustibleToggle"]),
-    ...mapGetters(["itemsCategorias", "itemsAnios", "itemsTransmision", "itemsCombustible", "itemsMarcas"]),
+    ...mapGetters(["itemsCategorias", "itemsAnios", "itemsTransmision", "itemsCombustible", "itemsMarcas", "itemsPrecios"]),
   },
   components: {
     Categorias,

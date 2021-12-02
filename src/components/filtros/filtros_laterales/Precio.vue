@@ -7,10 +7,11 @@
         </p>
         <div class="container pb-2 shadow p-3 bg-body rounded-bottom">
           <div class="py-4 px-3">
-            <VueSlider v-model="precio" 
-            :min="4490000" 
-            :max="26490000" 
-            :interval="1000000"
+            <VueSlider v-model="observerPrecios" 
+            :min="Math.min.apply(Math, this.prices)" 
+            :max="Math.max.apply(Math, this.prices)" 
+            :lazy="true"
+            :interval="1"
             :process-style="{ backgroundColor: '#DC3545' }"
             :tooltip="'always'"
             :enable-cross="false"
@@ -29,6 +30,7 @@
 
 <script>
 import VueSlider from "vue-slider-component";
+import { mapMutations, mapState } from "vuex";
 import "vue-slider-component/theme/default.css"
 export default {
   name: "Precio",
@@ -38,8 +40,30 @@ export default {
       formatter: v => `$${('' + v).replace(/\B(?=(\d{3})+(?!\d))/g, '.')}`,
     };
   },
+  computed: {
+    observerPrecios: {
+      get() {
+        return this.minMaxPrices;
+      },
+      set(v) {
+        this.setPrices(v)
+      }
+    },
+    ...mapState(["minMaxPrices"]),
+  },
+  methods: {
+    ...mapMutations(["setPrices", "getMinMaxPrices"]),
+  },
+  created () {
+    this.getMinMaxPrices();
+  },
   components: {
     VueSlider,
+  },
+  props: {
+    prices: {
+      type: Array,
+    },
   },
 };
 </script>

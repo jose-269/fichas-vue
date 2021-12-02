@@ -1,9 +1,17 @@
 <template>
   <div class="container-lg">
     <div class="row">
-      <div class="col-12 col-md-8 mt-5">
+      <div class="col-12">
+      <transition name="modal">
+        <div class="modal-overlay" v-if="showModal">
+
+        </div>
+      </transition>
+
+      </div>
+      <div class="col-12 col-md-8 mt-5" @click="showModal = true">
         <!-- carousel-slider -->
-        <Slider />
+        <Slider  />
       </div>
       <div class="col-12 col-md-4 mt-5">
         <div class="text-end pe-3">
@@ -270,6 +278,7 @@ export default {
         "https://dynaimage.cdn.cnn.com/cnn/c_fill,g_auto,w_1200,h_675,ar_16:9/https%3A%2F%2Fcdn.cnn.com%2Fcnnnext%2Fdam%2Fassets%2F210908165711-02-bentley-bacalar-drive.jpg",
       ],
       active: 0,
+      showModal: false,
     };
   },
   methods: {
@@ -329,6 +338,19 @@ export default {
   a {
     color: #395359;
   }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.7);
+}
+modal-enter {
+
 }
 
 </style>

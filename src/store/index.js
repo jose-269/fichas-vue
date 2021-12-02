@@ -50,7 +50,8 @@ export default new Vuex.Store({
     // RANGO DE AÑOS
     minMaxYear: [],
     todosAnios: [],
-
+     // RANGO DE PRECIOS
+     minMaxPrices: [],
   },
   getters: {
     getFiltrosLateral(state) {
@@ -58,26 +59,27 @@ export default new Vuex.Store({
       if(state.buscador) return state.data.filter(word => word.marca.match(state.buscador.toLocaleLowerCase()) || word.anio.match(state.buscador) || word.transmision.match(state.buscador.toLocaleLowerCase()));
       // FIN BUSCADOR
       // CHECKBOXES
-      if(state.categorias.length && state.marcas.length && state.transmisiones.length && state.combustibles.length) return state.data.filter(obj => state.categorias.includes(obj.categoria) && state.marcas.includes(obj.marca) && state.transmisiones.includes(obj.transmision) && state.combustibles.includes(obj.combustible) && state.minMaxYear[0] <= obj.anio && state.minMaxYear >= obj.anio);
+      if(state.categorias.length && state.marcas.length && state.transmisiones.length && state.combustibles.length) return state.data.filter(obj => state.categorias.includes(obj.categoria) && state.marcas.includes(obj.marca) && state.transmisiones.includes(obj.transmision) && state.combustibles.includes(obj.combustible) && state.minMaxYear[0] <= obj.anio && state.minMaxYear >= obj.anio );
+      
       // if(state.minMaxYear) return state.data.filter(obj => state.minMaxYear[0] <= obj.anio)
       
       else if(state.categorias.length && state.marcas.length && state.transmisiones.length) return state.data.filter(obj => state.categorias.includes(obj.categoria) && state.marcas.includes(obj.marca) && state.transmisiones.includes(obj.transmision));
       else if(state.categorias.length && state.marcas.length && state.combustibles.length) return state.data.filter(obj => state.categorias.includes(obj.categoria) && state.marcas.includes(obj.marca) && state.combustibles.includes(obj.combustible));
 
-      else if(state.categorias.length && state.marcas.length) return state.data.filter(obj => state.categorias.includes(obj.categoria) && state.marcas.includes(obj.marca));
-      else if(state.categorias.length && state.transmisiones.length) return state.data.filter(obj => state.categorias.includes(obj.categoria) && state.transmisiones.includes(obj.transmision));
-      else if(state.categorias.length && state.combustibles.length) return state.data.filter(obj => state.categorias.includes(obj.categoria) && state.combustibles.includes(obj.combustible));
-      else if(state.transmisiones.length && state.combustibles.length) return state.data.filter(obj => state.transmisiones.includes(obj.transmision) && state.combustibles.includes(obj.combustible));
-      else if(state.transmisiones.length && state.marcas.length) return state.data.filter(obj => state.transmisiones.includes(obj.transmision) && state.marcas.includes(obj.marca));
-      else if(state.combustibles.length && state.marcas.length) return state.data.filter(obj => state.combustibles.includes(obj.combustible) && state.marcas.includes(obj.marca));
+      else if(state.categorias.length && state.marcas.length) return state.data.filter(obj => state.categorias.includes(obj.categoria) && state.marcas.includes(obj.marca) && state.minMaxYear[0] <= obj.anio && state.minMaxYear[1] >= obj.anio && state.minMaxPrices[0] <= obj.precio && state.minMaxPrices[1] >= obj.precio);
+      else if(state.categorias.length && state.transmisiones.length) return state.data.filter(obj => state.categorias.includes(obj.categoria) && state.transmisiones.includes(obj.transmision) && state.minMaxYear[0] <= obj.anio && state.minMaxYear[1] >= obj.anio && state.minMaxPrices[0] <= obj.precio && state.minMaxPrices[1] >= obj.precio);
+      else if(state.categorias.length && state.combustibles.length) return state.data.filter(obj => state.categorias.includes(obj.categoria) && state.combustibles.includes(obj.combustible) && state.minMaxYear[0] <= obj.anio && state.minMaxYear[1] >= obj.anio && state.minMaxPrices[0] <= obj.precio && state.minMaxPrices[1] >= obj.precio);
+      else if(state.transmisiones.length && state.combustibles.length) return state.data.filter(obj => state.transmisiones.includes(obj.transmision) && state.combustibles.includes(obj.combustible) && state.minMaxYear[0] <= obj.anio && state.minMaxYear[1] >= obj.anio && state.minMaxPrices[0] <= obj.precio && state.minMaxPrices[1] >= obj.precio);
+      else if(state.transmisiones.length && state.marcas.length) return state.data.filter(obj => state.transmisiones.includes(obj.transmision) && state.marcas.includes(obj.marca) && state.minMaxYear[0] <= obj.anio && state.minMaxYear[1] >= obj.anio && state.minMaxPrices[0] <= obj.precio && state.minMaxPrices[1] >= obj.precio);
+      else if(state.combustibles.length && state.marcas.length) return state.data.filter(obj => state.combustibles.includes(obj.combustible) && state.marcas.includes(obj.marca) && state.minMaxYear[0] <= obj.anio && state.minMaxYear[1] >= obj.anio && state.minMaxPrices[0] <= obj.precio && state.minMaxPrices[1] >= obj.precio);
       
-      else if(state.categorias.length) return state.data.filter(obj => state.categorias.includes(obj.categoria) && state.minMaxYear[0] <= obj.anio && state.minMaxYear[1] >= obj.anio);
-      else if(state.marcas.length) return state.data.filter(obj => state.marcas.includes(obj.marca));
-      else if(state.transmisiones.length) return state.data.filter(obj => state.transmisiones.includes(obj.transmision) && state.minMaxYear[0] <= obj.anio && state.minMaxYear[1] >= obj.anio);
-      else if(state.combustibles.length) return state.data.filter(obj => state.combustibles.includes(obj.combustible) && state.minMaxYear[0] <= obj.anio && state.minMaxYear[1] >= obj.anio);
+      else if(state.categorias.length) return state.data.filter(obj => state.categorias.includes(obj.categoria) && state.minMaxYear[0] <= obj.anio && state.minMaxYear[1] >= obj.anio && state.minMaxPrices[0] <= obj.precio && state.minMaxPrices[1] >= obj.precio);
+      else if(state.marcas.length) return state.data.filter(obj => state.marcas.includes(obj.marca) && state.minMaxYear[0] <= obj.anio && state.minMaxYear[1] >= obj.anio && state.minMaxPrices[0] <= obj.precio && state.minMaxPrices[1] >= obj.precio);
+      else if(state.transmisiones.length) return state.data.filter(obj => state.transmisiones.includes(obj.transmision) && state.minMaxYear[0] <= obj.anio && state.minMaxYear[1] >= obj.anio && state.minMaxPrices[0] <= obj.precio && state.minMaxPrices[1] >= obj.precio);
+      else if(state.combustibles.length) return state.data.filter(obj => state.combustibles.includes(obj.combustible) && state.minMaxYear[0] <= obj.anio && state.minMaxYear[1] >= obj.anio && state.minMaxPrices[0] <= obj.precio && state.minMaxPrices[1] >= obj.precio);
 
-      else if(!state.categorias.length && !state.marcas.length && !state.transmisiones.length && !state.combustibles.length) return state.data.filter(obj => state.minMaxYear[0] <= obj.anio && state.minMaxYear[1] >= obj.anio)
-      
+      else if(!state.categorias.length && !state.marcas.length && !state.transmisiones.length && !state.combustibles.length) return state.data.filter(obj => state.minMaxYear[0] <= obj.anio && state.minMaxYear[1] >= obj.anio && state.minMaxPrices[0] <= obj.precio && state.minMaxPrices[1] >= obj.precio);
+
       else return state.data
       // FIN CHECKBOXES
     },
@@ -100,6 +102,11 @@ export default new Vuex.Store({
     itemsAnios(state) {
       const anios = state.data.map(el => el.anio).filter((anio, i, arr) => arr.indexOf(anio) === i);
       return anios;
+    },
+    /***  PRECIOS  ***/
+    itemsPrecios(state) {
+      const precios = state.data.map(el => el.precio).filter((precio, i, arr) => arr.indexOf(precio) === i);
+      return precios;
     },
     /***  MARCAS  ***/
     itemsMarcas(state) {
@@ -191,22 +198,23 @@ export default new Vuex.Store({
       return arr
     },
     setYears(state, payload) {
-     let anios = state.minMaxYear;
       const carga = payload;
       if(!carga) return;
-      anios = carga;
       state.minMaxYear = carga;
-      // state.data = state.data.filter(obj => anios[0] <= obj.anio);
-      console.log(anios);
-
-
-      // if(!carga) return state.totalAnios[0] = 2010;
-      // console.log(carga);
-      // state.totalAnios = carga;
-      // state.minAnio = carga[0];
-      // state.maxAnio = carga[1];
-      // if(state.minAnio > 0 ) return state.data.filter(obj => state.minAnio <= obj.anio);
-      // else return state.data
+    },
+    getMinMaxPrices(state) {
+      let todosPrecios = [];
+      const precios = state.data.map(el => el.precio).filter((precio, i, arr) => arr.indexOf(precio) === i);
+      const min = Math.min.apply(Math, precios); 
+      todosPrecios.push(min);
+      const max = Math.max.apply(Math, precios);
+      todosPrecios.push(max);
+      state.minMaxPrices = todosPrecios;
+    },
+    setPrices(state, payload) {
+      const carga = payload;
+      if(!carga) return;
+      state.minMaxPrices = carga;
     },
   },
   actions: {},
