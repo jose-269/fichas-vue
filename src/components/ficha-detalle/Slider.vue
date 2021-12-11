@@ -1,9 +1,15 @@
 <template>
-  <div class="body">
+  <div class="body row">
+    
     <div class="bg-dark">
-      <VueSlickCarousel :arrows="true" :fade="true" :autoplay="true" :speed="500" :slidesToShow="1" :asNavFor="$refs.indicators"  ref="main" :focusOnSelect="true">
-        <div v-for="img,i in pics" :key="i" >
-          <img :src="img" alt="main-pic" class="main-carousel">
+      <!-- <CoolLightBox 
+      :items="pictures" 
+      :index="index"
+      @close="index = null">
+    </CoolLightBox> -->
+      <VueSlickCarousel style="cursor: pointer" :arrows="true" :fade="true" :autoplay="true" :speed="500" :slidesToShow="1" :asNavFor="$refs.indicators"  ref="main" :focusOnSelect="true" class="images-wrapper">
+        <div v-for="img in pictures" :key="img.img" @click="index = img.img" >
+          <img :src="img.img" alt="main-pic"  class="main-carousel image">
         </div>
         <template #prevArrow="arrowOption">
            <div class="custom-arrow-prev">
@@ -19,8 +25,8 @@
     </div>
     <div class="bg-dark pb-2">
       <VueSlickCarousel :autoplay="true" :speed="500" :slidesToShow="6" :arrows="false" :asNavFor="$refs.main"  ref="indicators" :focusOnSelect="true">
-        <div v-for="img,i in pics" :key="i" >
-          <img :src="img" alt="indicator-pic" class="indicator-carousel d-inline">
+        <div v-for="img,i in pictures" :key="i" >
+          <img :src="img.img" alt="indicator-pic" class="indicator-carousel d-inline">
         </div>
       </VueSlickCarousel>
     </div>
@@ -30,7 +36,9 @@
 <script>
 import VueSlickCarousel from 'vue-slick-carousel';
 import 'vue-slick-carousel/dist/vue-slick-carousel.css';
-import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
+import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css';
+// import CoolLightBox from 'vue-cool-lightbox'
+import 'vue-cool-lightbox/dist/vue-cool-lightbox.min.css'
 export default {
   name: "Slider",
 
@@ -47,6 +55,38 @@ export default {
         "https://cdn.shopify.com/s/files/1/1021/2921/articles/nissan-z-proto-front.jpg?v=1629268796",
         "https://dynaimage.cdn.cnn.com/cnn/c_fill,g_auto,w_1200,h_675,ar_16:9/https%3A%2F%2Fcdn.cnn.com%2Fcnnnext%2Fdam%2Fassets%2F210908165711-02-bentley-bacalar-drive.jpg",
       ],
+      pictures: [
+        {
+          img: require("@/assets/img/carousel/foto-kkkk31-1.jpg")
+        },
+         {
+          img: require("@/assets/img/carousel/foto-kkkk31-2.jpg")
+        },
+         {
+          img: require("@/assets/img/carousel/foto-kkkk31-3.jpg")
+        },
+         {
+          img: require("@/assets/img/carousel/foto-kkkk31-4.jpg")
+        },
+         {
+          img: require("@/assets/img/carousel/foto-kkkk31-5.jpg")
+        },
+         {
+          img: require("@/assets/img/carousel/foto-kkkk31-6.jpg")
+        },
+         {
+          img: require("@/assets/img/carousel/foto-kkkk31-7.jpg")
+        },
+         {
+          img: require("@/assets/img/carousel/foto-kkkk31-8.jpg")
+        },
+         {
+          img: require("@/assets/img/carousel/foto-kkkk31-9.jpg")
+        },
+         {
+          img: require("@/assets/img/carousel/foto-kkkk31-10.jpg")
+        },
+      ],
       settingsIndicators: {
         "dots": false,
         "arrows": true,
@@ -58,26 +98,30 @@ export default {
         "autoplay": true,
         // "focusOnSelect": true,
         "asNavFor": "refs.main"
-      }
+      },
+      index: null,
     };
   },
   components: {
     VueSlickCarousel,
+    // CoolLightBox,
   },
 };
 </script>
 
 <style lang="scss" scoped>
+// .images-wrapper {
+// width: 80%;
+// }
 .main-carousel {
   // width: 730px;
-  height: 548px;
+  // height: 548px;
   width: 100%;
-   object-fit: cover
+  //  object-fit: cover
 }
 .indicator-carousel {
   width: 121.666667px;
   height: 91.3333333px;
-   object-fit: cover;
 }
 .custom-arrow-prev {
   z-index: 200;
